@@ -21,7 +21,7 @@ provider "aws" {
 
 ###############################################################################
 # BUCKET ######################################################################
-resource "aws_s3_bucket" "web-copy" {
+resource "aws_s3_bucket" "webCopy" {
   bucket    = "web-copy"
   acl       = "private"
 
@@ -40,7 +40,7 @@ resource "aws_s3_bucket_object" "indexHtml" {
   source       = "website\\index.html"
   etag         = "${md5(file("website\\index.html"))}"
   content_type = "text/html"
-  depends_on   = ["aws_s3_bucket.web-copy"] 
+  depends_on   = ["aws_s3_bucket.webCopy"] 
 }
 
 resource "aws_s3_bucket_object" "errorHtml" {
@@ -50,7 +50,7 @@ resource "aws_s3_bucket_object" "errorHtml" {
   source       = "website\\error.html"
   etag         = "${md5(file("website\\error.html"))}"
   content_type = "text/html"
-  depends_on   = ["aws_s3_bucket.web-copy"]
+  depends_on   = ["aws_s3_bucket.webCopy"]
 }
 
 resource "aws_s3_bucket_object" "mainCss" {
@@ -60,7 +60,7 @@ resource "aws_s3_bucket_object" "mainCss" {
   source       = "website\\main.css"
   etag         = "${md5(file("website\\main.css"))}"
   content_type = "text/css"
-  depends_on   = ["aws_s3_bucket.web-copy"]
+  depends_on   = ["aws_s3_bucket.webCopy"]
 }
 
 resource "aws_s3_bucket_object" "normalizeCss" {
@@ -70,7 +70,7 @@ resource "aws_s3_bucket_object" "normalizeCss" {
   source       = "website\\normalize.css"
   etag         = "${md5(file("website\\normalize.css"))}"
   content_type = "text/css"
-  depends_on   = ["aws_s3_bucket.web-copy"]
+  depends_on   = ["aws_s3_bucket.webCopy"]
 }
 
 resource "aws_s3_bucket_object" "scriptsJs" {
@@ -80,19 +80,19 @@ resource "aws_s3_bucket_object" "scriptsJs" {
   source       = "website\\scripts.js"
   etag         = "${md5(file("website\\scripts.js"))}"
   content_type = "text/javascript"
-  depends_on   = ["aws_s3_bucket.web-copy"]
+  depends_on   = ["aws_s3_bucket.webCopy"]
 }
 
 
 ###############################################################################
 # OTUPUTS #####################################################################
 output "bucketARN" {
-      value = "${aws_s3_bucket.web-copy.arn}"
+      value = "${aws_s3_bucket.webCopy.arn}"
   }
 output "bucketName" {
-      value = "${aws_s3_bucket.web-copy.bucket}"
+      value = "${aws_s3_bucket.webCopy.bucket}"
   }
 
 output "bucketId" {
-      value = "${aws_s3_bucket.web-copy.id}"
+      value = "${aws_s3_bucket.webCopy.id}"
   }
