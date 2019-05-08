@@ -14,7 +14,7 @@ terraform {
 ###############################################################################
 # PROVIDERS ###################################################################
 provider "aws" {
-    region = "us-east-1"
+    region  = "us-east-1"
     version = "~> 1.56"
 }
 
@@ -22,7 +22,7 @@ provider "aws" {
 ###############################################################################
 # BUCKET ######################################################################
 resource "aws_s3_bucket" "webCopy" {
-  bucket    = "web-copy"
+  bucket    = "web-copy-test"
   acl       = "private"
 
   versioning {
@@ -34,7 +34,7 @@ resource "aws_s3_bucket" "webCopy" {
 ###############################################################################
 # FILES #######################################################################
 resource "aws_s3_bucket_object" "indexHtml" {
-  bucket       = "web-copy"
+  bucket       = "web-copy-test"
   key          = "index.html"
   acl          = "public-read"
   source       = "website\\index.html"
@@ -44,7 +44,7 @@ resource "aws_s3_bucket_object" "indexHtml" {
 }
 
 resource "aws_s3_bucket_object" "errorHtml" {
-  bucket       = "web-copy"
+  bucket       = "web-copy-test"
   key          = "error.html"
   acl          = "public-read"
   source       = "website\\error.html"
@@ -54,7 +54,7 @@ resource "aws_s3_bucket_object" "errorHtml" {
 }
 
 resource "aws_s3_bucket_object" "mainCss" {
-  bucket       = "web-copy"
+  bucket       = "web-copy-test"
   key          = "main.css"
   acl          = "public-read"
   source       = "website\\main.css"
@@ -64,7 +64,7 @@ resource "aws_s3_bucket_object" "mainCss" {
 }
 
 resource "aws_s3_bucket_object" "normalizeCss" {
-  bucket       = "web-copy"
+  bucket       = "web-copy-test"
   key          = "normalize.css"
   acl          = "public-read"
   source       = "website\\normalize.css"
@@ -74,7 +74,7 @@ resource "aws_s3_bucket_object" "normalizeCss" {
 }
 
 resource "aws_s3_bucket_object" "scriptsJs" {
-  bucket       = "web-copy"
+  bucket       = "web-copy-test"
   key          = "scripts.js"
   acl          = "public-read"
   source       = "website\\scripts.js"

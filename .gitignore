@@ -1,2 +1,5 @@
 terraform.tfstate*
 .terraform/*
+*.log
+outputs.json
+outputs.txt
