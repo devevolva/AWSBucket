@@ -3,3 +3,4 @@ terraform.tfstate*
 *.log
 outputs.json
 outputs.txt
+*.plan
