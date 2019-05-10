@@ -106,9 +106,9 @@ Write-Output ""
 
 ###############################################################################
 # GIT #########################################################################
-$changes = git status ./README.md
+$changes = git status -s ./README.md
 
-if ( $changes -match("Changes not staged for commit")) {
+if ($changes) {
     git add .\README.md
     git commit -m "Update README versions: $tfVersion , $PSVersion."
     git push origin master 
