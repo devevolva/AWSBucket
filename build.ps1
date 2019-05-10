@@ -119,6 +119,6 @@ if ( $changes -match("Changes not staged for commit")) {
 }
 else {
     Write-Output ""
-    Write-Output "GIT: No change."
+    Write-Output "GIT: No change. Exiting..."
     Write-Output ""
 }
