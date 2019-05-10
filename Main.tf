@@ -21,8 +21,13 @@ provider "aws" {
 
 ###############################################################################
 # BUCKET ######################################################################
+variable "bucketName" {
+  description = "Bucket used to hold backup files."
+  default = "web-copy-test"
+}
+
 resource "aws_s3_bucket" "webCopy" {
-  bucket    = "web-copy-test"
+  bucket    = "${var.bucketName}"
   acl       = "private"
 
   versioning {
@@ -34,7 +39,7 @@ resource "aws_s3_bucket" "webCopy" {
 ###############################################################################
 # FILES #######################################################################
 resource "aws_s3_bucket_object" "indexHtml" {
-  bucket       = "web-copy-test"
+  bucket       = "${var.bucketName}"
   key          = "index.html"
   acl          = "public-read"
   source       = "website\\index.html"
@@ -44,7 +49,7 @@ resource "aws_s3_bucket_object" "indexHtml" {
 }
 
 resource "aws_s3_bucket_object" "errorHtml" {
-  bucket       = "web-copy-test"
+  bucket       = "${var.bucketName}"
   key          = "error.html"
   acl          = "public-read"
   source       = "website\\error.html"
@@ -54,7 +59,7 @@ resource "aws_s3_bucket_object" "errorHtml" {
 }
 
 resource "aws_s3_bucket_object" "mainCss" {
-  bucket       = "web-copy-test"
+  bucket       = "${var.bucketName}"
   key          = "main.css"
   acl          = "public-read"
   source       = "website\\main.css"
@@ -64,7 +69,7 @@ resource "aws_s3_bucket_object" "mainCss" {
 }
 
 resource "aws_s3_bucket_object" "normalizeCss" {
-  bucket       = "web-copy-test"
+  bucket       = "${var.bucketName}"
   key          = "normalize.css"
   acl          = "public-read"
   source       = "website\\normalize.css"
@@ -74,7 +79,7 @@ resource "aws_s3_bucket_object" "normalizeCss" {
 }
 
 resource "aws_s3_bucket_object" "scriptsJs" {
-  bucket       = "web-copy-test"
+  bucket       = "${var.bucketName}"
   key          = "scripts.js"
   acl          = "public-read"
   source       = "website\\scripts.js"
