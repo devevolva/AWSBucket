@@ -8,19 +8,34 @@
 ###############################################################################
 # INIT ########################################################################
 #_ PARAMETERS _________________________________________________________________
-param([string] $interactive = "true")# Require human interaction.
+param([string] $interactive = "true", # require human interaction.
+      [string] $logName = "", # TF_LOG path.
+      [string] $planName = "") # saved plan name.
+
+$cwd = Get-Location
+$tokens = $cwd -split '\\'
+$fileName = $tokens[$tokens.Length -1] -replace(' ', '_')
+
+if ($logName -eq "") {
+    $logName = "$fileName.log"
+}
+
+if ($planName -eq "") {
+    $planName = "$fileName.plan"
+}
+
 
 #_ LOGGING ____________________________________________________________________
 # Log levels TRACE, DEBUG, INFO, WARN or ERROR change log verbosity.
 $env:TF_LOG = "TRACE" #TRACE is the most verbose.
-$env:TF_LOG_PATH = "AWS_S3_BUCKET.log" #TODO: name after cwd as default.
+$env:TF_LOG_PATH = $logName
 
 
 
 ###############################################################################
 # PLAN ########################################################################
 # -out will overwrite plan on each run.
-terraform plan -detailed-exitcode -out="AWS_S3_BUCKET.plan"
+terraform plan -detailed-exitcode -out="$planName"
 $tfPlanExitCode = $LASTEXITCODE
 
 if ($tfPlanExitCode -eq 0) {
@@ -58,7 +73,7 @@ if ($interactive -eq "true") {
 
 if(($apply -eq "y" -or $apply -eq "yes") -or $interactive -eq "false") { # continue to SAVE OUTPUTS
     Write-Output ""
-    terraform apply -input=false -auto-approve "AWS_S3_BUCKET.plan" 
+    terraform apply -input=false -auto-approve "$planName"
     Write-Output ""
 }
 else {
@@ -86,7 +101,11 @@ Write-Output ""
 Write-Output ""
 Write-Output "TEST: Bucket file list, manual validation."
 Write-Output ""
-aws s3api list-objects --bucket web-copy-test #TODO: pull bucket name from outputs
+
+$bucketName = (get-content .\outputs.txt) -match ("bucketName = *.")
+$tokens = $bucketName -split ' = ' 
+
+aws s3api list-objects --bucket $tokens[1]
 
 
 
