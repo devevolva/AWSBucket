@@ -47,7 +47,7 @@ if ($tfPlanExitCode -eq 0) {
 }
 elseif ($tfPlanExitCode -eq 1) {
     Write-Output ""
-    Write-Output "PLAN: Error! Exiting..."
+    Write-Output "PLAN: Error! Check $logName for details. Exiting..."
     Write-Output ""
     return
 }
