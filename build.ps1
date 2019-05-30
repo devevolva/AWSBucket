@@ -31,7 +31,7 @@ if ($planName -eq "") {
 # Log levels TRACE, DEBUG, INFO, WARN or ERROR change log verbosity.
 $env:TF_LOG = $logLevel #TRACE is the most verbose.
 $env:TF_LOG_PATH = $logName
-Write-Output $logLevel
+
 
 
 ###############################################################################
