@@ -10,7 +10,8 @@
 #_ PARAMETERS _________________________________________________________________
 param([string] $interactive = "true", # Require human interaction.
       [string] $logName = "", # TF_LOG path.
-      [string] $planName = "") # Saved plan name.
+      [string] $planName = "", # Saved plan name.
+      [string] $logLevel = "TRACE") # Log verbosity.
 
 # Use current working dir as base for log and plan names if unspecified. 
 $cwd = Get-Location
@@ -28,9 +29,9 @@ if ($planName -eq "") {
 
 #_ LOGGING ____________________________________________________________________
 # Log levels TRACE, DEBUG, INFO, WARN or ERROR change log verbosity.
-$env:TF_LOG = "TRACE" #TRACE is the most verbose.
+$env:TF_LOG = $logLevel #TRACE is the most verbose.
 $env:TF_LOG_PATH = $logName
-
+Write-Output $logLevel
 
 
 ###############################################################################
