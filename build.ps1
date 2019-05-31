@@ -7,35 +7,37 @@
 
 ###############################################################################
 # INIT ########################################################################
-#_ PARAMETERS _________________________________________________________________
 param([string] $interactive = "true", # Require human interaction.
       [string] $logName = "", # TF_LOG path.
       [string] $planName = "", # Saved plan name.
-      [string] $logLevel = "TRACE") # Log verbosity.
+      [string] $logLevel = "TRACE") # Log verbosity. TRACE is the most verbose.
 
 # Use current working dir as base for log and plan names if unspecified. 
 $cwd = Get-Location
 $tokens = $cwd -split '\\'
 $fileName = $tokens[$tokens.Length - 1] -replace(' ', '_')
 
+
+
+###############################################################################
+## LOGGING ####################################################################
 if ($logName -eq "") {
     $logName = "$fileName.log"
 }
 
-if ($planName -eq "") {
-    $planName = "$fileName.plan"
-}
-
-
-#_ LOGGING ____________________________________________________________________
-# Log levels TRACE, DEBUG, INFO, WARN or ERROR change log verbosity.
-$env:TF_LOG = $logLevel #TRACE is the most verbose.
 $env:TF_LOG_PATH = $logName
+
+# Log levels: TRACE, DEBUG, INFO, WARN or ERROR change log verbosity.
+$env:TF_LOG = $logLevel
 
 
 
 ###############################################################################
 # PLAN ########################################################################
+if ($planName -eq "") {
+    $planName = "$fileName.plan"
+}
+
 # -out will overwrite plan on each run.
 terraform plan -detailed-exitcode -out="$planName"
 $tfPlanExitCode = $LASTEXITCODE
