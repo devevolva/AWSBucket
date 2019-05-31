@@ -12,7 +12,7 @@ param([string] $interactive = "true", # Require human interaction.
       [string] $planName = "", # Saved plan name.
       [string] $logLevel = "TRACE") # Log verbosity. TRACE is the most verbose.
 
-# Use current working dir as base for log and plan names if unspecified. 
+# Get current working dir as base for log and plan names when unspecified. 
 $cwd = Get-Location
 $tokens = $cwd -split '\\'
 $fileName = $tokens[$tokens.Length - 1] -replace(' ', '_')
