@@ -27,7 +27,11 @@ if ($logName -eq "") {
 
 $env:TF_LOG_PATH = $logName
 
-# Log levels: TRACE, DEBUG, INFO, WARN or ERROR change log verbosity.
+# Setting TF_LOG to empty string will disable logging.
+if ($logLevel -eq "NONE") {
+    $logLevel = ""
+}
+# Log levels: NONE, TRACE, DEBUG, INFO, WARN or ERROR change log verbosity.
 $env:TF_LOG = $logLevel
 
 
